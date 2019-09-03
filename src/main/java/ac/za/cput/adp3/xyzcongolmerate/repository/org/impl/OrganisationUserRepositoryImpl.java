@@ -20,34 +20,54 @@ public class OrganisationUserRepositoryImpl implements OrganisationUserRepositor
         return organisationUserRepository;
     }
 
-    //TODO: Implement body
+    private OrganisationUser findOrganisationUser(String orgCode, String userEmail)
+    {
+        return this.organisationUserDB.stream()
+                .filter(organisationUser -> organisationUser.getUserEmail().trim().equals(userEmail)
+                        &&organisationUser.getOrgCode().trim().equals(orgCode))
+                        .findAny()
+                .orElse(null);
+
+    }
+
+
     @Override
     public OrganisationUser create(OrganisationUser organisationUser) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.organisationUserDB.add(organisationUser);
+        return organisationUser;
     }
 
-    //TODO: Implement body
+
     @Override
     public OrganisationUser read(String orgCode, String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       OrganisationUser organisationUser = findOrganisationUser(orgCode,userEmail);
+       return organisationUser;
     }
 
-    //TODO: Implement body
+
     @Override
     public OrganisationUser update(OrganisationUser organisationUser) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       OrganisationUser toUpdate = findOrganisationUser(organisationUser.getOrgCode(),organisationUser.getUserEmail());
+       if(toUpdate!=null){
+           this.organisationUserDB.remove(toUpdate);
+           return create(organisationUser);
+       }
+       return null;
     }
 
-    //TODO: Implement body
+
     @Override
     public void delete(String orgCode, String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        OrganisationUser toDelete = findOrganisationUser(orgCode,userEmail);
+        if(toDelete!=null){
+            this.organisationUserDB.remove(toDelete);
+        }
     }
 
-    //TODO: Implement body
+
     @Override
     public Set<OrganisationUser> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.organisationUserDB;
     }
 
 

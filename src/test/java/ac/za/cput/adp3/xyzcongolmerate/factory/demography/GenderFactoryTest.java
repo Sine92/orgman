@@ -1,21 +1,21 @@
 package ac.za.cput.adp3.xyzcongolmerate.factory.demography;
 
+import ac.za.cput.adp3.xyzcongolmerate.domain.demography.Gender;
 import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class GenderFactoryTest {
 
-    //TODO: implement method body ONLY!
+   private Gender gender;
+
     @Test
     public void buildGender() {
-        throw new UnsupportedOperationException("Not supported yet!");
-        /**
-         * Your implementation goes here
-         *
-         * INSTRUCTION
-         * 1. Remove line [//TODO: implement method body ONLY!]
-         * 2. Remove line [throw new UnsupportedOperationException("Not yet supported!");]
-         * 3. Test the GenderFactory class
-         * 4. Assert that the id is generated.
-         */
+
+        gender = GenderFactory.buildGender(" nana");
+        assertEquals(gender,gender);
+        assertNotNull(gender.getGenderId());
+
     }
 }

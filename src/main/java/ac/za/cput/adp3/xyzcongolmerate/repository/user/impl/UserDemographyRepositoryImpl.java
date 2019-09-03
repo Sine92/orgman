@@ -20,33 +20,54 @@ public class UserDemographyRepositoryImpl implements UserDemographyRepository {
         return userDemographyRepository;
     }
 
-    //TODO: Implement body
+    private UserDemography findUserDemography(String userEmail)
+    {
+        return this.userDemographyDB.stream()
+                .filter(userDemography -> userDemography.getUserEmail().trim().trim().equals(userEmail))
+                .findAny()
+                .orElse(null);
+    }
+
+
+
     @Override
     public UserDemography create(UserDemography userDemography) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       this.userDemographyDB.add(userDemography);
+       return userDemography;
     }
 
-    //TODO: Implement body
+
     @Override
     public UserDemography read(String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        UserDemography userDemography = findUserDemography(userEmail);
+        return userDemography;
     }
 
-    //TODO: Implement body
+
     @Override
     public UserDemography update(UserDemography userDemography) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        UserDemography toUpdate = findUserDemography(userDemography.getUserEmail());
+                if(toUpdate!= null){
+                    this.userDemographyDB.remove(toUpdate);
+                    return create(userDemography);
+                }
+           return null;
     }
 
-    //TODO: Implement body
+
     @Override
     public void delete(String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        UserDemography toDelete = findUserDemography(userEmail);
+        if(toDelete!=null){
+            this.userDemographyDB.remove(toDelete);
+
+
+        }
     }
 
-    //TODO: Implement body
+
     @Override
     public Set<UserDemography> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.userDemographyDB;
     }
 }
